@@ -12,7 +12,6 @@ function Popular() {
 
   //Fetch Repos
   const fetchRepos = async () => {
-    setIsLoading(true);
     try {
       const res = await fetch(
         `https://api.github.com/search/repositories?q=stars:%3E1+language:${activeLang}&sort=stars&order=desc&type=Repositories`
@@ -35,9 +34,13 @@ function Popular() {
     } else {
       setIsLoading(false);
     }
-  }, [activeLang, repos]);
+    // eslint-disable-next-line
+  }, [activeLang]);
 
   const handleClick = (lang) => {
+    if (lang === activeLang) {
+      return;
+    }
     setIsLoading(true);
     setActiveLang(lang);
   };
